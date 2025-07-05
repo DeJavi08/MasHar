@@ -1,4 +1,4 @@
-# 🌟 Website Resmi LBB Mas Har
+# 🌟 Website Fan Made LBB Mas Har
 
 **LBB Mas Har** adalah Lembaga Bimbingan Belajar untuk jenjang SD, SMP, dan SMA yang berlokasi di Surabaya. Website ini dirancang untuk memberikan informasi lengkap bagi siswa dan orang tua mengenai layanan bimbingan, biaya, fasilitas, dan testimoni alumni.
 

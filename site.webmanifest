@@ -1,0 +1,21 @@
+{
+  "name": "LBB Mas Har",
+  "short_name": "Mas Har",
+  "description": "Bimbingan Belajar Terbaik di Surabaya untuk SD, SMP, dan SMA",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007BFF",
+  "icons": [
+    {
+      "src": "/favicon_io/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon_io/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

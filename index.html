@@ -73,6 +73,23 @@
         .slider-item {
             transition: opacity 0.5s ease-in-out;
         }
+
+        /* Slider Background */
+        .slider-bg {
+            background-size: cover;
+            background-position: center;
+            animation: slideShow 18s infinite;
+        }
+
+        @keyframes slideShow {
+            0%   { background-image: url('/assets/img/KBM_1.jpg'); opacity:1; }
+            30%  { background-image: url('/assets/img/KBM_1.jpg'); opacity:1; }
+            33%  { background-image: url('/assets/img/KBM_2.jpg'); opacity:1; }
+            63%  { background-image: url('/assets/img/KBM_2.jpg'); opacity:1; }
+            66%  { background-image: url('/assets/img/KBM_3.jpg'); opacity:1; }
+            96%  { background-image: url('/assets/img/KBM_3.jpg'); opacity:1; }
+            100% { background-image: url('/assets/img/KBM_1.jpg'); opacity:1; }
+        }
         /* Warna utama yang digunakan */
         :root {
             --primary-color: #007BFF; /* Biru Edukatif */
@@ -126,22 +143,35 @@
     </header>
 
     <main>
-        <!-- Hero Section -->
-        <section class="bg-white pt-16 pb-20">
-            <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
-                    Raih Prestasi Akademik Terbaik <br class="hidden md:block"> bersama <span class="text-primary">LBB Mas Har</span>
-                </h1>
-                <p class="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
-                    Bimbingan belajar terpercaya untuk jenjang SD, SMP, dan SMA di Surabaya. Siap membantu putra-putri Anda meraih kampus impian dengan metode belajar yang efektif dan menyenangkan.
-                </p>
-                <div class="mt-10">
-                    <a href="https://wa.me/6281330212567?text=Halo%20LBB%20Mas%20Har,%20saya%20tertarik%20untuk%20mendaftar.%20Mohon%20informasinya." target="_blank" class="bg-primary text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-700 transition transform hover:scale-105 inline-block">
-                        Daftar Sekarang via WhatsApp
-                    </a>
-                </div>
-            </div>
-        </section>
+       <section id="hero" class="relative h-[90vh] flex items-center justify-center text-center text-white">
+    <!-- Background Slider -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="slider-bg absolute inset-0"></div>
+    </div>
+
+    <!-- Overlay Gelap Biar Teks Jelas -->
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+    <!-- Konten Teks -->
+    <div class="relative z-10 max-w-3xl px-6">
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+            Raih Prestasi Akademik Terbaik <br class="hidden md:block">
+            bersama <span class="text-primary">LBB Mas Har</span>
+        </h1>
+        <p class="mt-6 text-lg opacity-90">
+            Bimbingan belajar terpercaya untuk jenjang SD, SMP, dan SMA di Surabaya. 
+            Siap membantu putra-putri Anda meraih kampus impian dengan metode belajar 
+            yang efektif dan menyenangkan.
+        </p>
+        <div class="mt-10">
+            <a href="https://wa.me/6281330212567?text=Halo%20LBB%20Mas%20Har,%20saya%20tertarik%20untuk%20mendaftar.%20Mohon%20informasinya."
+               target="_blank"
+               class="bg-primary text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-700 transition transform hover:scale-105 inline-block">
+                Daftar Sekarang via WhatsApp
+            </a>
+        </div>
+    </div>
+</section>
 
         <!-- Tentang Kami & Profil Pemilik -->
         <section id="tentang" class="py-20">

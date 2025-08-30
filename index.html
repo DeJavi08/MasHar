@@ -525,57 +525,124 @@
         </div>
     </footer>
 
-    <script>
-        // Script untuk menu mobile
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+<!-- JS utama: taruh sebelum </body> -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // --- Mobile menu ---
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
 
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+  // --- Reusable slider (robust) ---
+  // Cara pakai: createSlider({ sliderId: 'id-slider', prevBtnId: 'prev-id', nextBtnId: 'next-id', interval: 5000 });
+  function createSlider({ sliderId, prevBtnId = null, nextBtnId = null, interval = 5000, pauseOnHover = true } = {}) {
+    const slider = document.getElementById(sliderId);
+    if (!slider) {
+      console.warn('Slider not found:', sliderId);
+      return;
+    }
+    const slides = Array.from(slider.querySelectorAll('.slider-item'));
+    if (!slides.length) {
+      console.warn('No slides found inside:', sliderId);
+      return;
+    }
 
-        // Fungsi reusable untuk slider
-        function createSlider(sliderId, prevBtnId, nextBtnId) {
-            const slider = document.getElementById(sliderId);
-            const slides = slider.querySelectorAll('.slider-item');
-            const prevBtn = document.getElementById(prevBtnId);
-            const nextBtn = document.getElementById(nextBtnId);
-            let currentIndex = 0;
+    const prevBtn = prevBtnId ? document.getElementById(prevBtnId) : null;
+    const nextBtn = nextBtnId ? document.getElementById(nextBtnId) : null;
+    let currentIndex = 0;
+    let timer = null;
 
-            function showSlide(index) {
-                slides.forEach((slide, i) => {
-                    if (i === index) {
-                        slide.classList.remove('hidden', 'opacity-0');
-                    } else {
-                        slide.classList.add('hidden', 'opacity-0');
-                    }
-                });
-            }
-
-            prevBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-                showSlide(currentIndex);
-            });
-
-            nextBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex + 1) % slides.length;
-                showSlide(currentIndex);
-            });
-
-            // Inisialisasi slider
-            showSlide(currentIndex);
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        if (i === index) {
+          slide.classList.remove('hidden', 'opacity-0');
+          slide.style.opacity = '1';
+        } else {
+          slide.classList.add('hidden', 'opacity-0');
+          slide.style.opacity = '0';
         }
+      });
+    }
 
-        // Inisialisasi slider testimoni dan galeri
-        createSlider('testimoni-slider', 'prev-testimoni', 'next-testimoni');
-        createSlider('galeri-slider', 'prev-galeri', 'next-galeri');
+    function next() {
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
+    }
+    function prev() {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      showSlide(currentIndex);
+    }
 
-        "@context": "https://schema.org",
-        "@type": "EducationalOrganization",
-        "name": "LBB Mas Har",
-        "url": "https://lbbmashar.netlify.app",
-        "logo": "https://lbbmashar.netlify.app/favicon.ico"
-    </script>
+    if (prevBtn) prevBtn.addEventListener('click', () => { prev(); restartAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { next(); restartAuto(); });
+
+    function startAuto() {
+      if (interval > 0) {
+        stopAuto();
+        timer = setInterval(next, interval);
+      }
+    }
+    function stopAuto() {
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+    function restartAuto() { stopAuto(); startAuto(); }
+
+    if (pauseOnHover) {
+      slider.addEventListener('mouseenter', stopAuto);
+      slider.addEventListener('mouseleave', startAuto);
+    }
+
+    // init
+    showSlide(currentIndex);
+    startAuto();
+
+    return { next, prev, startAuto, stopAuto };
+  }
+
+  // --- Inisialisasi slider yang sudah ada di HTML ---
+  createSlider({ sliderId: 'testimoni-slider', prevBtnId: 'prev-testimoni', nextBtnId: 'next-testimoni', interval: 6000 });
+  createSlider({ sliderId: 'galeri-slider', prevBtnId: 'prev-galeri', nextBtnId: 'next-galeri', interval: 5000 });
+
+  // --- (Opsional) Hero background slider via JS --- 
+  // Jika kamu pakai elemen background .slider-bg pada hero, JS ini akan auto-ganti gambarnya.
+  const heroBg = document.querySelector('.slider-bg');
+  if (heroBg) {
+    const heroImages = [
+      '/assets/img/KBM_1.jpg',
+      '/assets/img/KBM_2.jpg',
+      '/assets/img/KBM_3.jpg'
+    ];
+    let hIdx = 0;
+    heroBg.style.backgroundImage = `url('${heroImages[hIdx]}')`;
+    heroBg.style.transition = 'opacity .45s ease-in-out';
+    heroBg.style.opacity = '1';
+
+    setInterval(() => {
+      heroBg.style.opacity = '0';
+      setTimeout(() => {
+        hIdx = (hIdx + 1) % heroImages.length;
+        heroBg.style.backgroundImage = `url('${heroImages[hIdx]}')`;
+        heroBg.style.opacity = '1';
+      }, 450);
+    }, 6000);
+  }
+});
+</script>
+
+<!-- JSON-LD (structured data) harus di-tag yang benar -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "LBB Mas Har",
+  "url": "https://lbbmashar.netlify.app",
+  "logo": "https://lbbmashar.netlify.app/favicon.ico"
+}
+</script>
 
 </body>
 </html>
